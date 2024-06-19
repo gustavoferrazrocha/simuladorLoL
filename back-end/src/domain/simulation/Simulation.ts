@@ -6,7 +6,6 @@ import { SimulationMethods } from "./SimulationMethods"
 export class Simulation implements SimulationMethods {
     private readonly GAME_DURATION = 15;
     private readonly FARM_INCREMENT = 19.8;
-    private readonly CSPM_MULTIPLIER = 1;
 
     private readonly KDA_WEIGHT = 0.3;
     private readonly DPM_WEIGHT = 0.3;
@@ -27,32 +26,34 @@ export class Simulation implements SimulationMethods {
         }
 
         const interval = setInterval(() => {
-            gameState.minute++
-            const allPlayersInGame = [...teamOne.getPlayers(), ...teamTwo.getPlayers()]
+            gameState.minute++;
+            const allPlayersInGame = [...teamOne.getPlayers(), ...teamTwo.getPlayers()];
 
-            this.simulatePlayersFarm(allPlayersInGame)
-            this.simulateTop(gameState)
+            this.simulatePlayersFarm(allPlayersInGame);
+            this.simulateTop(gameState);
 
-            console.log('Tempo da partida: ', gameState.minute, 'minutos')
+            console.clear();
+            this.logGameState(gameState);
+            
             if (gameState.minute === this.GAME_DURATION) {
                 clearInterval(interval);
             }
-        }, 1000)
+        }, 1000);
     }
 
     private simulatePlayersFarm(allPlayersInGame: Player[]) {
         allPlayersInGame.forEach(player => {
-            player.incrementFarm(Math.round(player.getCspm() * this.CSPM_MULTIPLIER))
-            player.incrementGold(this.FARM_INCREMENT)
-        })
+            player.incrementFarm(Math.round(player.getCspm()));
+            player.incrementGold(this.FARM_INCREMENT * player.getFarm());
+        });
     }
 
     private simulateTop(gameState: IGameState) {
         const topPlayerOne = gameState.teamOne.getPlayerByRole('top');
         const topPlayerTwo = gameState.teamTwo.getPlayerByRole('top');
 
-        const simulateKillEvents = this.simulateKill(topPlayerOne, topPlayerTwo)
-        gameState.events.push(simulateKillEvents)
+        const simulateKillEvents = this.simulateKill(topPlayerOne, topPlayerTwo);
+        gameState.events.push(simulateKillEvents);
     }
 
     public simulateKill(playerOne: Player, playerTwo: Player): string {
@@ -70,10 +71,12 @@ export class Simulation implements SimulationMethods {
 
         if (playerOneKillProbability > playerTwoKillProbability) {
             playerOne.incrementKills(1);
+            playerOne.incrementGold(300)
             playerTwo.incrementDeaths(1);
             return `O jogador ${playerOne.getName()} abateu o ${playerTwo.getName()} na ${playerOne.getRole()} lane`;
         } else {
             playerTwo.incrementKills(1);
+            playerTwo.incrementGold(300)
             playerOne.incrementDeaths(1);
             return `O jogador ${playerTwo.getName()} abateu o ${playerOne.getName()} na ${playerTwo.getRole()} lane`;
         }
@@ -99,5 +102,37 @@ export class Simulation implements SimulationMethods {
         const defense = (dth * this.DTH_WEIGHT) + (gd10 * this.GD10_WEIGHT) + (xpd10 * this.XPD10_WEIGHT) + (csd10 * this.CSD10_WEIGHT);
 
         return defense;
+    }
+
+    private logGameState(gameState: IGameState) {
+        const { teamOne, teamTwo, minute } = gameState;
+
+        const teamOneGold = teamOne.getPlayers().reduce((total, player) => total + player.getGold(), 0);
+        const teamTwoGold = teamTwo.getPlayers().reduce((total, player) => total + player.getGold(), 0);
+    
+        const teamOneKills = teamOne.getPlayers().reduce((total, player) => total + player.getKills(), 0);
+        const teamTwoKills = teamTwo.getPlayers().reduce((total, player) => total + player.getKills(), 0);
+
+        console.log(`${teamOne.getName()}             ${teamTwo.getName()}`);
+        console.log(`${teamOneGold}                  (${teamOneKills}         ${teamTwoKills})                ${teamTwoGold}`);
+        console.log(`                         ${minute}:00                         `);
+
+        const teamOnePlayers = teamOne.getPlayers();
+        const teamTwoPlayers = teamTwo.getPlayers();
+
+        for (let i = 0; i < teamOnePlayers.length; i++) {
+            const playerOne = teamOnePlayers[i];
+            const playerTwo = teamTwoPlayers[i];
+
+            const playerOneGold = playerOne.getGold();
+            const playerTwoGold = playerTwo.getGold();
+            const playerOneStats = `${playerOne.getKills()}/${playerOne.getDeaths()}/${playerOne.getAssists()}`;
+            const playerTwoStats = `${playerTwo.getKills()}/${playerTwo.getDeaths()}/${playerTwo.getAssists()}`;
+            const difference = playerOneGold - playerTwoGold;
+
+            const differenceText = difference > 0 ? ` >   ${Math.abs(difference)}` : ` <   ${Math.abs(difference)}`;
+
+            console.log(`${playerOne.getName()}   Gold: ${playerOneGold} CS: ${playerOne.getFarm()}   ${playerOneStats} ${differenceText}   ${playerTwoStats}   Gold: ${playerTwoGold} CS: ${playerTwo.getFarm()}   ${playerTwo.getName()}`);
+        }
     }
 }

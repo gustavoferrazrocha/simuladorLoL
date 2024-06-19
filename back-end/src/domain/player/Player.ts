@@ -1,4 +1,5 @@
 import { PlayerDto } from "./PlayerDto";
+import { Team } from "../team/Team";
 
 export class Player {
     private name: string;
@@ -54,6 +55,9 @@ export class Player {
     public getCspm(): number {
         return this.cspm;
     }
+    public getFarm(): number {
+        return this.farm;
+    }
 
     public getOverall(): number {
         return this.overall;
@@ -99,19 +103,26 @@ export class Player {
         return this.csd10;
     }
 
-    public incrementKills(kills: number) {
-        this.kills += kills;
+    public incrementKills(amount: number) {
+        this.kills += amount;
     }
 
-    public incrementDeaths(deaths: number) {
-        this.deaths += deaths;
+    public incrementDeaths(amount: number) {
+        this.deaths += amount;
     }
 
-    public incrementFarm(farm: number) {
-        this.farm += farm;
+    public incrementFarm(amount: number) {
+        this.farm += amount;
     }
 
-    public incrementGold(gold: number) {
-        this.gold += gold;
+    public incrementGold(amount: number) {
+        this.gold += amount;
+    }
+
+    public getGold(): number {
+        return this.gold;
+    }
+    public getDeaths(): number {
+        return this.deaths
     }
 }
