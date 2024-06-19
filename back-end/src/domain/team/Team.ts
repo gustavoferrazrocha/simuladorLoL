@@ -23,5 +23,15 @@ export class Team {
     public getPlayers(): Player[] {
         return this.players
     }
+
+    public getPlayerByRole(role: string): Player {
+        const player = this.players.find(player => player.getRole() === role);
+
+        if (!player) {
+            throw new Error(`Jogador com a role: '${role}' não foi encontrado no time.`);
+        }
+
+        return player
+    }
     
 }
