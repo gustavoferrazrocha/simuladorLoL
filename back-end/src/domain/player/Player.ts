@@ -1,7 +1,6 @@
 import { PlayerDto } from "./PlayerDto";
 
 export class Player {
-    //vem da api
     private name: string;
     private cspm: number;
     private role: string;
@@ -10,93 +9,109 @@ export class Player {
     private kills: number;
     private deaths: number;
     private assists: number;
-    
+    private overall: number;
+    private dpm: number;
+    private fb: number;
+    private ks: number;
+    private dth: number;
+    private gd10: number;
+    private xpd10: number;
+    private csd10: number;
+    private gold: number;
+
     constructor(data: PlayerDto) {
-        this.name = data.playerApiData.name
-        this.cspm = data.playerApiData.cspm
-        this.role = data.playerApiData.role
-        this.kda = data.playerApiData.kda
-        this.farm = data.farm
-        this.kills = data.kills
-        this.deaths = data.deaths
-        this.assists = data.assists
+        this.name = data.playerApiData.name;
+        this.cspm = data.playerApiData.cspm;
+        this.role = data.playerApiData.role;
+        this.kda = data.playerApiData.kda;
+        this.farm = data.farm;
+        this.kills = data.kills;
+        this.deaths = data.deaths;
+        this.assists = data.assists;
+        this.overall = data.overall;
+        this.dpm = data.dpm;
+        this.fb = data.fb;
+        this.ks = data.ks;
+        this.dth = data.dth;
+        this.gd10 = data.gd10;
+        this.xpd10 = data.xpd10;
+        this.csd10 = data.csd10;
+        this.gold = data.gold
     }
 
     public getKda(): number {
         return this.kda;
     }
 
+    public getName(): string {
+        return this.name;
+    }
+
+    public getRole(): string {
+        return this.role;
+    }
+
     public getCspm(): number {
         return this.cspm;
     }
 
-    public incrementKills (kills: number) {
+    public getOverall(): number {
+        return this.overall;
+    }
+
+    public getDpm(): number {
+        return this.dpm;
+    }
+
+    public getFb(): number {
+        return this.fb;
+    }
+
+    public getKs(): number {
+        return this.ks;
+    }
+
+    public getKills(): number {
+        return this.kills;
+    }
+
+    public getDeath(): number {
+        return this.deaths;
+    }
+
+    public getAssists(): number {
+        return this.assists;
+    }
+
+    public getDth(): number {
+        return this.dth;
+    }
+
+    public getGd10(): number {
+        return this.gd10;
+    }
+
+    public getXpd10(): number {
+        return this.xpd10;
+    }
+
+    public getCsd10(): number {
+        return this.csd10;
+    }
+
+    public incrementKills(kills: number) {
         this.kills += kills;
     }
 
-    public incrementDeaths (deaths: number) {
+    public incrementDeaths(deaths: number) {
         this.deaths += deaths;
     }
 
-    public incrementFarm (farm: number) {
+    public incrementFarm(farm: number) {
         this.farm += farm;
     }
+
+    public incrementGold(gold: number) {
+        this.gold += gold;
+    }
 }
-
-
-//     {
-//       "name": "robo",
-//       "role": "top",
-//       "overall": 60,
-//       "farm": 0,
-//       "cspm": 7.3,
-//       "kda": 3.2,
-//       "kills": 0,
-//       "deaths": 0,
-//       "assists": 0
-//     },
-//     {
-//       "name": "croc",
-//       "role": "jg",
-//       "overall": 60,
-//       "farm": 0,
-//       "cspm": 7.3,
-//       "kda": 3.2,
-//       "kills": 0,
-//       "deaths": 0,
-//       "assists": 0
-//     },
-//     {
-//       "name": "tinows",
-//       "role": "mid",
-//       "overall": 60,
-//       "farm": 0,
-//       "cspm": 7.3,
-//       "kda": 3.2,
-//       "kills": 0,
-//       "deaths": 0,
-//       "assists": 0
-//     },
-//     {
-//       "name": "route",
-//       "role": "adc",
-//       "overall": 70,
-//       "farm": 0,
-//       "cspm": 7.3,
-//       "kda": 3.2,
-//       "kills": 0,
-//       "deaths": 0,
-//       "assists": 0
-//     },
-//     {
-//       "name": "redbert",
-//       "role": "sup",
-//       "overall": 60,
-//       "farm": 0,
-//       "cspm": 7.3,
-//       "kda": 3.2,
-//       "kills": 0,
-//       "deaths": 0,
-//       "assists": 0
-//     }
-//   ],
