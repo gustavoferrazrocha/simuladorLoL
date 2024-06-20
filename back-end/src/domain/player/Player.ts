@@ -111,8 +111,10 @@ export class Player {
         this.deaths += amount;
     }
 
-    public incrementFarm() {
-        this.farm += Math.round(this.cspm);
+    public incrementFarm(): number {
+        const farmGained = Math.round(this.cspm);
+        this.farm += farmGained;
+        return farmGained;
     }
 
     public incrementGold(amount: number) {

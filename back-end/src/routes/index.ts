@@ -8,7 +8,7 @@ export class RouterAdapter {
   createRoutes() {
     this.app.get("/", (req: Request, res: Response) => {
       const simulation = new Simulation([team1, team2]);
-      simulation.simulateGame()
+      simulation.runSimulation()
       res.send();
     });
   }

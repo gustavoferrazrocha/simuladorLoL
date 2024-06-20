@@ -1,4 +1,4 @@
-export const GAME_DURATION = 15;
+export const GAME_DURATION = 30;
 export const FARM_INCREMENT = 19.8;
 
 export const KDA_WEIGHT = 0.3;
