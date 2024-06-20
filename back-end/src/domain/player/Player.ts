@@ -1,5 +1,5 @@
 import { PlayerDto } from "./PlayerDto";
-import { Team } from "../team/Team";
+import Constants from "../constants";
 
 export class Player {
     private name: string;
@@ -111,8 +111,8 @@ export class Player {
         this.deaths += amount;
     }
 
-    public incrementFarm(amount: number) {
-        this.farm += amount;
+    public incrementFarm() {
+        this.farm += Math.round(this.cspm);
     }
 
     public incrementGold(amount: number) {
@@ -124,5 +124,27 @@ export class Player {
     }
     public getDeaths(): number {
         return this.deaths
+    }
+
+    public calculatePlayerAttack(): number {
+        const kda = this.kda;
+        const dpm = this.dpm;
+        const fb = this.fb;
+        const ks = this.ks;
+
+        const attack = (kda * Constants.KDA_WEIGHT) + (dpm * Constants.DPM_WEIGHT) + (fb * Constants.FB_WEIGHT) + (ks * Constants.KS_WEIGHT);
+
+        return attack;
+    }
+
+    public calculatePlayerDefense(): number {
+        const dth = this.dth;
+        const gd10 = this.gd10;
+        const xpd10 = this.xpd10;
+        const csd10 = this.csd10;
+
+        const defense = (dth * Constants.DTH_WEIGHT) + (gd10 * Constants.GD10_WEIGHT) + (xpd10 * Constants.XPD10_WEIGHT) + (csd10 * Constants.CSD10_WEIGHT);
+
+        return defense;
     }
 }

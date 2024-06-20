@@ -1,8 +1,9 @@
 import { Team } from "../domain/team/Team";
+import {Player} from "../domain/player";
 
 export interface IGameState {
     minute: number;
     events: string[];
-    teamOne: Team;
-    teamTwo: Team;
+    teams: [Team, Team];
+    allPlayersInGame: Player[]
 }
