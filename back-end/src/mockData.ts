@@ -1,9 +1,7 @@
 // src/mockData.ts
 
-import { PlayerDto } from "./domain/player/PlayerDto";
-import { TeamDto } from "./domain/team/TeamDto";
-import { Player } from "./domain/player/Player";
-import { Team } from "./domain/team/Team";
+import { PlayerDto, Player } from "./domain/player";
+import { TeamDto, Team } from "./domain/team";
 
 const playerData: PlayerDto = {
   playerApiData: {
