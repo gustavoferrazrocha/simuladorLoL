@@ -8,9 +8,9 @@ export class Team {
     private kills: number;
     private dragonsQuantity: number;
     private towersQuantity: number;
-    private isDragonSoul: boolean;
-    private isNashorBuff: boolean;
-    private isElderDragon: boolean;
+    private hasDragonSoul: boolean;
+    private hasNashorBuff: boolean;
+    private hasElderDragon: boolean;
     
     constructor(data: TeamDto) {
         this.players = data.players
@@ -19,9 +19,9 @@ export class Team {
         this.kills = data.kills
         this.dragonsQuantity = data.dragonsQuantity
         this.towersQuantity = data.towersQuantity
-        this.isDragonSoul = data.isDragonSoul
-        this.isNashorBuff = data.isNashorBuff
-        this.isElderDragon = data.isElderDragon
+        this.hasDragonSoul = data.hasDragonSoul
+        this.hasNashorBuff = data.hasNashorBuff
+        this.hasElderDragon = data.hasElderDragon
     }
     
     public getPlayers(): Player[] {

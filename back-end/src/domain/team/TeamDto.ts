@@ -7,7 +7,7 @@ export interface TeamDto {
     kills: number;
     dragonsQuantity: number;
     towersQuantity: number;
-    isDragonSoul: boolean;
-    isNashorBuff: boolean;
-    isElderDragon: boolean;
+    hasDragonSoul: boolean;
+    hasNashorBuff: boolean;
+    hasElderDragon: boolean;
 }

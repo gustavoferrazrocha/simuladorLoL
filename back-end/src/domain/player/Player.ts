@@ -30,13 +30,13 @@ export class Player {
         this.deaths = data.deaths;
         this.assists = data.assists;
         this.overall = data.overall;
-        this.dpm = data.dpm;
-        this.fb = data.fb;
-        this.ks = data.ks;
-        this.dth = data.dth;
-        this.gd10 = data.gd10;
-        this.xpd10 = data.xpd10;
-        this.csd10 = data.csd10;
+        this.dpm = data.playerApiData.dpm;
+        this.fb = data.playerApiData.fb;
+        this.ks = data.playerApiData.ks;
+        this.dth = data.playerApiData.dth;
+        this.gd10 = data.playerApiData.gd10;
+        this.xpd10 = data.playerApiData.xpd10;
+        this.csd10 = data.playerApiData.csd10;
         this.gold = data.gold
     }
 

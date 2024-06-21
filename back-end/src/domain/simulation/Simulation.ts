@@ -23,6 +23,7 @@ export class Simulation implements SimulationMethods {
 
             this.updatePlayerFarm();
             this.simulateTopLaneFight();
+            this.simulateMidLaneFight();
 
             console.clear();
             this.displayGameState();
@@ -32,6 +33,7 @@ export class Simulation implements SimulationMethods {
             }
         }, 1000);
     }
+    
 
     private updatePlayerFarm() {
         this.gameState.allPlayersInGame.forEach(player => {
@@ -41,11 +43,31 @@ export class Simulation implements SimulationMethods {
     }
 
     private simulateTopLaneFight() {
-        const topPlayerOne = this.gameState.teams[0].getPlayerByRole('top');
-        const topPlayerTwo = this.gameState.teams[1].getPlayerByRole('top');
+        const PlayerOne = this.gameState.teams[0].getPlayerByRole('top');
+        const PlayerTwo = this.gameState.teams[1].getPlayerByRole('top');
+        
+        const hasFight = randomize(0, 100)
 
-        const fightEvent = this.handleKillEvent(topPlayerOne, topPlayerTwo);
-        this.gameState.events.push(fightEvent);
+        if (hasFight >= 50) {
+            const fightEvent = this.handleKillEvent(PlayerOne, PlayerTwo);
+            this.gameState.events.push(fightEvent);
+        }
+
+        return
+    }
+
+    private simulateMidLaneFight() {
+        const PlayerOne = this.gameState.teams[0].getPlayerByRole('mid');
+        const PlayerTwo = this.gameState.teams[1].getPlayerByRole('mid');
+        
+        const hasFight = randomize(0, 100)
+
+        if (hasFight >= 50) {
+            const fightEvent = this.handleKillEvent(PlayerOne, PlayerTwo);
+            this.gameState.events.push(fightEvent);
+        }
+
+        return
     }
 
     private handleKillEvent(playerOne: Player, playerTwo: Player): string {
