@@ -42,5 +42,30 @@ export class Team {
 
         return player
     }
+
+    public calculateBotlaneAttack(): number {
+        const adcAttack = this.getPlayerByRole('adc').calculatePlayerAttack()
+        const supAttack = this.getPlayerByRole('sup').calculatePlayerAttack()
+
+        const botLaneAttack = adcAttack + supAttack
+
+        return botLaneAttack
+    }
+
+    public calculateBotlaneDefense(): number {
+        const adcDefense = this.getPlayerByRole('adc').calculatePlayerDefense()
+        const supDefense = this.getPlayerByRole('sup').calculatePlayerDefense()
+
+        const botLaneDefense = adcDefense + supDefense
+
+        return botLaneDefense
+    }
+
+    public calculateBotLaneKillProbability(): number {
+        const botKillProbability = this.calculateBotlaneAttack() + this.calculateBotlaneDefense()
+
+        return botKillProbability
+
+    }
     
 }

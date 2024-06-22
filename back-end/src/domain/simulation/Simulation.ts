@@ -22,8 +22,8 @@ export class Simulation implements SimulationMethods {
             this.gameState.minute++;
 
             this.updatePlayerFarm();
-            this.simulateTopLaneFight();
-            this.simulateMidLaneFight();
+            this.simulateSoloLaneFight('top')
+            this.simulateSoloLaneFight('mid')
 
             console.clear();
             this.displayGameState();
@@ -42,33 +42,54 @@ export class Simulation implements SimulationMethods {
         });
     }
 
-    private simulateTopLaneFight() {
-        const PlayerOne = this.gameState.teams[0].getPlayerByRole('top');
-        const PlayerTwo = this.gameState.teams[1].getPlayerByRole('top');
+    private simulateSoloLaneFight(lane: 'top' | 'mid') {
+        const PlayerOne = this.gameState.teams[0].getPlayerByRole(lane);
+        const PlayerTwo = this.gameState.teams[1].getPlayerByRole(lane);
         
-        const hasFight = randomize(0, 100)
+        const hasFight = randomize(0, 100);
 
         if (hasFight >= 50) {
             const fightEvent = this.handleKillEvent(PlayerOne, PlayerTwo);
             this.gameState.events.push(fightEvent);
         }
-
-        return
     }
 
-    private simulateMidLaneFight() {
-        const PlayerOne = this.gameState.teams[0].getPlayerByRole('mid');
-        const PlayerTwo = this.gameState.teams[1].getPlayerByRole('mid');
-        
-        const hasFight = randomize(0, 100)
+    private simulateBotLaneFight() {
+        const botOne = [
+            this.gameState.teams[0].getPlayerByRole('adc'),
+            this.gameState.teams[0].getPlayerByRole('sup')
+        ];
+        const botTwo = [
+            this.gameState.teams[1].getPlayerByRole('adc'),
+            this.gameState.teams[1].getPlayerByRole('sup')
+        ];
+
+        const hasFight = randomize(0, 100);
 
         if (hasFight >= 50) {
-            const fightEvent = this.handleKillEvent(PlayerOne, PlayerTwo);
+            const fightEvent = this.handleBotKillEvent(botOne, botTwo);
             this.gameState.events.push(fightEvent);
         }
-
-        return
     }
+
+    private handleBotKillEvent(botOne: Player[], botTwo: Player[]): string {
+        const botOneRoll = randomize(0, 10);
+        const botTwoRoll = randomize(0, 10);
+        
+
+        const botOneKillProbability = this.gameState.teams[0].calculateBotLaneKillProbability() + botOneRoll
+        const botTwoKillProbability = this.gameState.teams[1].calculateBotLaneKillProbability() + botTwoRoll
+
+        if (botOneKillProbability > botTwoKillProbability) {
+            
+        }
+
+
+
+        return ''
+    }
+    
+    
 
     private handleKillEvent(playerOne: Player, playerTwo: Player): string {
         const playerOneRoll = randomize(0, 10);
@@ -95,6 +116,13 @@ export class Simulation implements SimulationMethods {
         victim.incrementDeaths(1);
 
         return `Player ${killer.getName()} killed ${victim.getName()} in the ${killer.getRole()} lane`;
+    }
+
+    private recordAssit(player: Player, victim: Player): string {
+        player.incrementAssits(1);
+        player.incrementGold(300);
+
+        return `Player ${player.getName()} pegou assistencia em cima do: ${victim.getName()}`;
     }
 
     private displayGameState() {

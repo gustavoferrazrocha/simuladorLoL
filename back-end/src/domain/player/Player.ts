@@ -107,6 +107,10 @@ export class Player {
         this.kills += amount;
     }
 
+    public incrementAssits(amount: number) {
+        this.assists += amount;
+    }
+
     public incrementDeaths(amount: number) {
         this.deaths += amount;
     }
